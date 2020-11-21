@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 //Connect to the db .... mongodb:// means I am connecting to a mongodb database
-moongoose.connect("mongodb://100.115.92.2/pascfbdb");
+mongoose.connect("mongodb://localhost/pascfbdb");
 
 
 //my application doesn't know when the connection is complete
