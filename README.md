@@ -3,15 +3,40 @@
 ## How To Install MongoDB
 
 ```bash
-sudo apt install mongodb
+root@omarbelkady:~$ sudo apt install mongodb
 ```
 
 ### Package Used To Interract With MongoDB
 
 ```bash
-npm install mongoose --save
+root@omarbelkady:~$ npm install mongoose --save
 ```
 
+
+### Important Concept:
+- MongoDB stores docs(aka rows) in what are called collections(table)
+- MongoDB stores data records as Binary Documents. BSON is the binary(fav lev of program for @alanngo) repr of JSON docs.
+
+
+
+### BSON Data Types
+
+| Type      | Alias |
+| ----------- | -----------|
+| Double      | double     |
+| String   | string        |
+| Object   | object        |
+| Array   | array          |
+| ObjectId   | objectId    |
+| Boolean   | bool         |
+| Date   | date            |
+| Null   | null            |
+| Regular Expression   | regex        |
+| Javascript   | javascript            |
+| 32 Bit Integer   | Int            |
+| 64 Bit Integer      | long        |
+| Decimal128       | decimal|
+| Min and Max Key      | minKey maxKey        |
 
 ### How Do We Connect To MongoDB
 - Client makes a request to the server
@@ -19,9 +44,14 @@ npm install mongoose --save
 - Data is retrieved from the DB and it displays the data(if available) in the browser(Client)
 
 ## Basic Commands
-### Display The of the current db
+### Display The Name of the current db
 ```
-db
+root@omarbelkady:~$ db
+```
+
+### Get The Name #2:
+```bash
+root@omarbelkady:~$ db.getName();
 ```
 
 ### Start the database
@@ -36,12 +66,17 @@ mongo
 
 ### Show The List of Databases
 ```
-show dbs
+show dbs;
 ```
 
 ### Switch to the cstsffb database
 ```
 use cstsffb
+```
+
+### Create a collection
+```
+db.createCollection("76lanc6", {YOUR_OPTIONS_GO_HERE});
 ```
 
 ### Show the list of Database Collections
@@ -56,14 +91,25 @@ show collections
 insert(data)
 ```
 
+### Insert a student into a collection a js object with a js extension
+```
+db.DBNAME.insert(JSONObJECTYouWANTTOADD);
+```
+
+
+### Insert Many student into the collection a js object with a js extension
+```
+db.DBNAME.insertMany(JSONObJECTYouWANTTOADD);
+```
+
 ### Insert A Single Document
 ```
-insertOne(data, differentOptionsYouWant)
+insertOne(data, differentOptionsYouWant);
 ```
 
 ### Insert Many Documents
 ```
-insertMany(data, differentOptionsYouWant)
+insertMany(data, differentOptionsYouWant);
 ```
 
 ### Insert Many Documents #2
@@ -73,10 +119,32 @@ insertMany([{},{},{}])
 
 ## Reading Data
 
-### Show the data within a collection
+### Show the data within a collection 
+- find takes two arguments the query criteria and the projection
+- limit to 7 students
+- age and name can be referred to as the columns in SQL 
 ```
-db.collection.find()
+db.collectionNAME.find(
+  { age: { $gt: 21} },
+  { name: 1, address: 1},
+).limit(7).pretty();
 ```
+
+```
+db.collectionNAME.find({fname: "Omar"}).pretty();
+```
+
+### Return Specific Fields of Omar
+```
+db.collectionNAME.find({fname: "Omar"}, {fname: 1,  lname: 1, gender: 1}).pretty();
+```
+
+### Exclude Specific Fields of Omar
+```
+db.collectionNAME.find({fname: "Omar"}, {fname: 1,  lname: 1, likesJava: 0}).pretty();
+```
+
+
 
 ### Find All The Matching Documents
 ```
@@ -100,6 +168,11 @@ updateOne(filter,data,options)
 updateMany(filter,data,options)
 ```
 
+### Update A Documents within the collection
+```
+db.collectionNAME.update([_id: ObjectId("qZvCf/4+AcPdqHoNMkrrXbsz66H3NOMkzbDzF+Uv9HI=")]);
+```
+
 ### Fully replace a document
 ```
 replaceOne(filter, data, options)
@@ -115,6 +188,28 @@ deleteOne(filter, options)
 ### Delete Many Documents
 ```
 deleteMany(filter, options)
+```
+
+### Delete A Database
+```bash
+root@omarbelkady:~$ db.dropDatabase();
+```
+
+### Delete A Database Num2
+```bash
+root@omarbelkady:~$ db.DBNAME.drop();
+```
+
+### Delete A Database Num2
+```bash
+root@omarbelkady:~$ db.animals.drop();
+```
+
+
+
+## Help With DB Command
+```bash
+root@omarbelkady:~$ db.help();
 ```
 
 ## Filtering
